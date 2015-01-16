@@ -1,2 +1,0 @@
-# INFOB2KI-D
-# INFOB2KI-D
