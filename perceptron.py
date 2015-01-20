@@ -54,8 +54,34 @@ class PerceptronClassifier:
         for iteration in range(self.max_iterations):
             print "Starting iteration ", iteration, "..."
             for i in range(len(trainingData)):
-                "*** YOUR CODE HERE ***"
-                util.raiseNotDefined()
+                
+                """
+                    We should be careful here, because we are already inside a for loop.
+                    Therefore we can use the i variable as an index.
+                """
+                
+                # Define a score using the Counter datastructure
+                score = util.Counter()
+                
+                # Get training data for this iteration
+                data = trainingData[i]
+                
+                # Get training labels
+                true_label = trainingLabels[i]
+                
+                # Loop over each label and use the formula to calculate the weighted score 
+                for label in self.legalLabels:
+                    score[label] = self.weights[label] * data
+                
+                # Now we can calculate y', being the label with the highest score
+                best_label = score.argMax()
+                
+                # Only adjust the weight vectors when incorrect, using the inequality sign
+                if(best_label != true_label):
+                    
+                    # Update weight vectors
+                    self.weights[best_label] -= data
+                    self.weights[true_label] += data
 
     def classify(self, data ):
         """
