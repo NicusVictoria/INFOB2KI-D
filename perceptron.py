@@ -105,7 +105,23 @@ class PerceptronClassifier:
         """
         featuresWeights = []
 
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
-
-        return featuresWeights
+        """
+            We calculate the weights of the feature values
+            and return a list of 100 features that made it
+            to the top!
+        """
+        
+        # Define weights as a Counter datastructure
+        weights = util.Counter()
+        
+        # Loop over all features
+        for feature in self.features:
+            
+            # Assign the weight for the current value of the feature
+            weights[feature] = self.weights[label][feature]
+        
+        # Order the list by keys
+        featuresWeights = weights.sortedKeys()
+        
+        # Return the final list of the 100 greatest hits (or weight for some label)!
+        return featuresWeights[:100]

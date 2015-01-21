@@ -13,4 +13,8 @@
 
 
 def q2():
-    "*** YOUR CODE HERE ***"
+    """ 
+        As observed in the function findHighWeightFeatures (perceptron.py),
+        we clearly see the result of 'a'. Therefore, we return 'a' as our answer.
+    """
+    return 'a'
