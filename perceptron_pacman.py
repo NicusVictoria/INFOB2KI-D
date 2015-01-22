@@ -45,9 +45,32 @@ class PerceptronClassifierPacman(PerceptronClassifier):
         self.features = trainingData[0][0]['Stop'].keys() # could be useful later
         # DO NOT ZERO OUT YOUR WEIGHTS BEFORE STARTING TRAINING, OR
         # THE AUTOGRADER WILL LIKELY DEDUCT POINTS.
-
+        
         for iteration in range(self.max_iterations):
             print "Starting iteration ", iteration, "..."
             for i in range(len(trainingData)):
                 "*** YOUR CODE HERE ***"
-                util.raiseNotDefined()
+                
+                # Define a score
+                score = util.Counter()
+                
+                # Get the possible states for the current state
+                # by using the trainingData. The state is indexed
+                # at the 'i'th iteration as the first index [0].
+                for state in trainingData[i][0]:
+                    
+                    # Do the calculations with the static weights factor
+                    score[state] = self.weights * state
+                
+                # Best action is extracted, being a'
+                best_action = score.argMax()
+                
+                # Get the actual action it's supposed to be
+                supposed_action = trainingLabels[i]
+                
+                # Finally, compare and update in case it's incorrect
+                if best_action != supposed_action:
+                    
+                    # Since weights is static, don't use indexing
+                    self.weights += trainingData[i][0][supposed_action]
+                    self.weights -= trainingData[i][0][best_action]
