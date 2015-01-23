@@ -81,7 +81,6 @@ class MiraClassifier:
         if(best_label != true_label):
                         
             theta = ((self.weights[best_label] - self.weights[true_label) * data + 1)/()
-            
             lowestc = Cgrid[0]
             
             for c in Cgrid:
