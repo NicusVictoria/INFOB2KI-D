@@ -60,39 +60,59 @@ class MiraClassifier:
         datum is a counter from features to values for those features
         representing a vector of values.
         """
-        # Define a score using the Counter datastructure
-        score = util.Counter()
         
-        # Get training data for this iteration
-        data = trainingData[i]
+        for i in range(len(trainingData)):
         
-        # Get training labels
-        true_label = trainingLabels[i]
-        
-        # Loop over each label and use the formula to calculate the weighted score 
-        for label in self.legalLabels:
-            score[label] = self.weights[label] * data
-        
-        # Now we can calculate y', being the label with the highest score
-        best_label = score.argMax()
-        
-        
-        # Only adjust the weight vectors when incorrect, using the inequality sign
-        if(best_label != true_label):
-                        
-            theta = ((self.weights[best_label] - self.weights[true_label) * data + 1)/()
-            lowestc = Cgrid[0]
+            # Define a score using the Counter datastructure
+            score = util.Counter()
             
-            for c in Cgrid:
-                if c < lowestc:
-                    lowestc = c
+            # Get training data for this iteration
+            data = trainingData[i]
             
-            if theta < lowestc:
-                theta = lowestc
+            # Get training labels
+            true_label = trainingLabels[i]
             
-            # Update weight vectors
-            self.weights[best_label] -= (theta*data)
-            self.weights[true_label] += (theta*data)
+            # Loop over each label and use the formula to calculate the weighted score 
+            for label in self.legalLabels:
+                score[label] = self.weights[label] * data
+            
+            # Now we can calculate y', being the label with the highest score
+            best_label = score.argMax()
+            
+            
+            # Only adjust the weight vectors when incorrect, using the inequality sign
+            if(best_label != true_label):
+            
+                wbl = self.weights[best_label]
+                wtl = self.weights[true_label]
+                
+                
+                copy1 = data.copy()
+                copy1.normalize()
+                copy1.divideAll(0.5)
+                copy2 = data.copy()
+                copy2.normalize()
+                              
+                            
+                tau = 0.5#((wbl-wtl)*data + 1)/(copy1 * copy2)
+                
+                lowestC = 1
+                
+                for c in Cgrid:
+                    if c < lowestC:
+                        lowestC = c
+                
+                if tau < lowestC:
+                    tau = lowestC
+                
+                # Update weight vectors
+                
+                copy = data.copy()
+                copy.divideAll(1/tau)
+                
+                self.weights[best_label] -= copy
+                self.weights[true_label] += copy
+            
 
     def classify(self, data ):
         """
