@@ -80,7 +80,7 @@ class MiraClassifier:
         # Only adjust the weight vectors when incorrect, using the inequality sign
         if(best_label != true_label):
                         
-            theta = ((self.weights[best_label] - self.weights[true_label) * data + 1)/()
+            theta = ((self.weights[best_label] - self.weights[true_label] * data + 1)/()
             
             lowestc = Cgrid[0]
             
